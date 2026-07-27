@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReaperZPn 2.0</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="/eel.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="loading-screen" class="glass">
+        <div class="loading-content">
+            <h2 class="logo-text" style="font-size: 36px; margin-bottom: 20px;">REAPERZPN</h2>
+            <p style="color: var(--text-muted); font-size: 16px;">Inicializando e limpando cache de rede...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <div class="background-overlay"></div>
+    <div class="app-container">
+        
+        <!-- Sidebar -->
+        <nav class="sidebar glass">
+            <div class="brand">
+                <div class="logo-container">
+                    <img src="https://cdn2.steamgriddb.com/logo_thumb/733ab6d9d5011e3c44fa7da16679db4b.png" alt="ReaperZ Logo" id="guild-logo">
+                </div>
+                <img src="assets/TEXTO.png" alt="ReaperZPn Texto" class="brand-text-img">
+            </div>
+            
+            <ul class="nav-links">
+                <li class="active" onclick="switchPage('library', this)">
+                    <span class="icon">🎮</span> Biblioteca
+                </li>
+                <li onclick="switchPage('settings', this)">
+                    <span class="icon">⚙️</span> Configuração VPN
+                </li>
+            </ul>
+
+            <div class="global-status" id="global-status">
+                <div class="status-indicator"></div>
+                <span>Desconectado</span>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            
+            <section id="page-library" class="page active">
+                <header class="library-header">
+                    <div class="header-content">
+                        <h2>Meus Jogos</h2>
+                        <p>Otimize sua rota com um clique. Rotas dedicadas pela guilda.</p>
+                    </div>
+                    <div class="routing-mode-container glass" style="justify-content: flex-end; gap: 15px;">
+                        <span class="routing-label" id="label-global">VPN Full</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-global" onchange="document.getElementById('label-global').classList.toggle('active-label')">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </header>
+                
+                <div class="games-grid" id="games-grid">
+                    <!-- Preenchido pelo JS -->
+                </div>
+            </section>
+
+            <!-- Page: Settings -->
+            <section id="page-settings" class="page">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%; min-height: 80vh;">
+                    <header style="text-align: center; margin-bottom: 15px;">
+                        <img src="assets/reaperz_title_logo.png" alt="Acesso Ao Castelo ReaperZ" style="width: 350px; max-width: 100%; opacity: 0.8; filter: drop-shadow(0 0 15px rgba(255,0,0,0.3)); pointer-events: none; margin-top: -30px;">
+                    </header>
+                    
+                    <div class="settings-card glass">
+                        <img src="https://cdn2.steamgriddb.com/logo_thumb/0bfc7c0297fd6f8a2b287f860559e194.png" class="settings-key-img" alt="Logo">
+                        <div class="card-text">
+                            <h3>Key De Acesso <span id="key-badge" class="badge inactive">Consultando...</span></h3>
+                            <p>Utilize o arquivo enviado pelos moderadores da guilda para registrar sua chave pessoal.</p>
+                            <p id="key-name-text" style="color: var(--text-main); font-size: 14px; font-weight: bold; display: none; margin-top: 8px;"><span id="key-name"></span></p>
+                            <p id="key-endpoint-text" style="color: var(--accent-red); font-size: 13px; font-weight: bold; display: none; margin-top: 2px;">Servidor: <span id="key-endpoint-ip"></span></p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <button class="btn-import" id="btn-import" onclick="importConfig()">Import Key</button>
+                            <button class="btn-remove" id="btn-remove" onclick="removeConfig()" style="display: none;">Remove Key</button>
+                        </div>
+                    </div>
+                    <div id="import-msg" class="msg-box"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content glass">
+            <h3>Deseja Remover Sua Chave de Acesso a VPN?</h3>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeConfirmModal()">Não</button>
+                <button class="btn-confirm" onclick="proceedRemoveKey()">Sim</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

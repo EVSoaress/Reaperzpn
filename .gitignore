@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+build/
+dist/
+dist_obf/
+*.spec
+*.log
+data.json
