@@ -6,3 +6,6 @@ dist_obf/
 *.spec
 *.log
 data.json
+*.py
+*.exe
+core/
