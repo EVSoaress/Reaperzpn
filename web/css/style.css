@@ -537,3 +537,6 @@ input:checked + .slider:before {
     background: var(--accent-hover);
     box-shadow: var(--glow-red);
 }
+
+.input-select { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.5); color: var(--text-main); font-family: 'Roboto', sans-serif; outline: none; }
+.input-select:focus { border-color: var(--accent-red); }

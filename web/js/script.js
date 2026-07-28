@@ -10,6 +10,9 @@ function switchPage(pageId, element) {
     
     if (pageId === 'settings') {
         updateKeyStatus();
+    } else if (pageId === 'console') {
+        loadAdapters();
+        updateKeyStatus();
     }
 }
 
@@ -225,6 +228,83 @@ async function toggleConsoleMode() {
         // Se a VPN já estiver ligada, avisa que precisa reconectar
         alert("O modo mudou! Desligue e ligue a VPN novamente para aplicar o novo roteamento de Console.");
     }
+}
+
+// Carrega os adaptadores de rede
+async function loadAdapters() {
+    const pub = document.getElementById("public-adapter");
+    const priv = document.getElementById("private-adapter");
+    
+    // Mostra loading
+    pub.innerHTML = '<option value="">Buscando placas...</option>';
+    priv.innerHTML = '<option value="">Buscando placas...</option>';
+    
+    const adapters = await eel.get_network_adapters()();
+    
+    if (adapters && adapters.length > 0) {
+        pub.innerHTML = '<option value="">-- Selecione --</option>';
+        priv.innerHTML = '<option value="">-- Selecione --</option>';
+        
+        adapters.forEach(name => {
+            const opt1 = document.createElement("option");
+            opt1.value = name;
+            opt1.textContent = name;
+            pub.appendChild(opt1);
+            
+            const opt2 = document.createElement("option");
+            opt2.value = name;
+            opt2.textContent = name;
+            priv.appendChild(opt2);
+        });
+    } else {
+        pub.innerHTML = '<option value="">Nenhuma placa encontrada</option>';
+        priv.innerHTML = '<option value="">Nenhuma placa encontrada</option>';
+    }
+}
+
+// Dispara o ICS PowerShell
+async function triggerICS(enable) {
+    const pub = document.getElementById("public-adapter").value;
+    const priv = document.getElementById("private-adapter").value;
+    const msgBox = document.getElementById("ics-msg");
+    
+    if (enable && (!pub || !priv)) {
+        msgBox.className = "msg-box msg-error";
+        msgBox.innerText = "Você precisa selecionar as duas placas de rede!";
+        msgBox.style.display = "block";
+        setTimeout(() => msgBox.style.display = 'none', 4000);
+        return;
+    }
+    
+    if (enable && pub === priv) {
+        msgBox.className = "msg-box msg-error";
+        msgBox.innerText = "As placas não podem ser a mesma!";
+        msgBox.style.display = "block";
+        setTimeout(() => msgBox.style.display = 'none', 4000);
+        return;
+    }
+    
+    msgBox.className = "msg-box";
+    msgBox.innerText = enable ? "Ativando roteamento do Windows (Isso pode demorar alguns segundos)..." : "Desligando roteamento...";
+    msgBox.style.display = "block";
+    
+    // Desabilita botões temporariamente
+    document.getElementById("btn-enable-ics").disabled = true;
+    document.getElementById("btn-disable-ics").disabled = true;
+    
+    const result = await eel.configure_ics(pub, priv, enable)();
+    
+    if (result.success) {
+        msgBox.className = "msg-box msg-success";
+    } else {
+        msgBox.className = "msg-box msg-error";
+    }
+    msgBox.innerText = result.msg;
+    
+    document.getElementById("btn-enable-ics").disabled = false;
+    document.getElementById("btn-disable-ics").disabled = false;
+    
+    setTimeout(() => msgBox.style.display = 'none', 5000);
 }
 
 // Auto-Iniciar ao carregar o DOM

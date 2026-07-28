@@ -38,6 +38,9 @@
                 <li onclick="switchPage('settings', this)">
                     <span class="icon">⚙️</span> Configuração VPN
                 </li>
+                <li onclick="switchPage('console', this)">
+                    <span class="icon">🕹️</span> Modo Console
+                </li>
             </ul>
 
             <div class="global-status" id="global-status">
@@ -89,21 +92,56 @@
                             <button class="btn-remove" id="btn-remove" onclick="removeConfig()" style="display: none;">Remove Key</button>
                         </div>
                     </div> <!-- Fecha settings-card -->
-                        
-                    <div class="routing-mode-container glass" style="margin-top: 15px; padding: 10px; border-radius: 10px; justify-content: space-between; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <div id="import-msg" class="msg-box"></div>
+                </div>
+            </section>
+
+            <!-- Page: Console -->
+            <section id="page-console" class="page">
+                <header class="library-header">
+                    <div class="header-content">
+                        <h2>Central do Console (Xbox/PS5)</h2>
+                        <p>Transforme seu PC em um Roteador Inteligente focado em jogos.</p>
+                    </div>
+                </header>
+                
+                <div class="settings-card glass" style="margin-top: 20px;">
+                    <h3 style="color: var(--accent-red); margin-bottom: 20px;">Automação de Roteamento</h3>
+                    <p style="font-size: 14px; margin-bottom: 20px;">Para rotear a internet do seu video game pelo PC, selecione de onde vem a internet e para onde ela vai.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
                         <div>
-                            <span class="routing-label active-label" id="label-console" style="font-size: 14px;">Modo Console (Xbox/PS5)</span>
-                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: left;">Roteia a internet do Xbox via cabo de rede</p>
+                            <label style="display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px;">De onde vem a sua Internet?</label>
+                            <select id="public-adapter" class="input-select">
+                                <option value="">Carregando placas de rede...</option>
+                            </select>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="cursor: pointer; font-size: 18px;" onclick="openTutorialModal()" title="Como conectar o Xbox?">❓</span>
-                            <label class="switch">
-                                <input type="checkbox" id="toggle-console" onchange="toggleConsoleMode()">
-                                <span class="slider round"></span>
-                            </label>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px;">Onde está ligado o cabo do Console?</label>
+                            <select id="private-adapter" class="input-select">
+                                <option value="">Carregando placas de rede...</option>
+                            </select>
                         </div>
                     </div>
-                    <div id="import-msg" class="msg-box"></div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn-import" id="btn-enable-ics" onclick="triggerICS(true)" style="flex: 1;">Ativar Compartilhamento</button>
+                        <button class="btn-remove" id="btn-disable-ics" onclick="triggerICS(false)" style="flex: 1;">Desligar Compartilhamento</button>
+                    </div>
+                    <div id="ics-msg" class="msg-box" style="margin-top: 15px;"></div>
+                </div>
+                
+                <div class="routing-mode-container glass" style="margin-top: 15px; padding: 10px; border-radius: 10px; justify-content: space-between; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <div>
+                        <span class="routing-label active-label" id="label-console" style="font-size: 14px;">Túnel Amazon (IP Filtering)</span>
+                        <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: left;">Ativa o modo de Roteamento Dinâmico para Console</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-console" onchange="toggleConsoleMode()">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
             </section>
 
