@@ -62,10 +62,14 @@ async function loadGames() {
         if (!imgSrc.startsWith("http")) {
             imgSrc = `assets/${game.image}?t=${Date.now()}`;
         }
-        if (game.id === "custom") imgSrc = "https://via.placeholder.com/120/1a1a1a/ffffff?text=%2B";
+        
+        let placeholderPlus = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='120' height='120' fill='%231a1a1a'/><text x='50%' y='50%' fill='%23fff' dominant-baseline='middle' text-anchor='middle' font-size='48'>+</text></svg>";
+        let placeholderQuestion = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='120' height='120' fill='%23333333'/><text x='50%' y='50%' fill='%23fff' dominant-baseline='middle' text-anchor='middle' font-size='24'>?</text></svg>";
+        
+        if (game.id === "custom") imgSrc = placeholderPlus;
         
         card.innerHTML = `
-            <img src="${imgSrc}" onerror="this.src='https://via.placeholder.com/120/333/fff?text=?'">
+            <img src="${imgSrc}" onerror="this.src='${placeholderQuestion}'">
             <h3>${game.name}</h3>
             <button class="btn-toggle" onclick="toggleRoute('${game.id}')">
                 ${isActive ? 'LIGADO' : 'ATIVAR ROTA'}
