@@ -88,19 +88,19 @@
                             <button class="btn-import" id="btn-import" onclick="importConfig()">Import Key</button>
                             <button class="btn-remove" id="btn-remove" onclick="removeConfig()" style="display: none;">Remove Key</button>
                         </div>
+                    </div> <!-- Fecha settings-card -->
                         
-                        <div class="routing-mode-container glass" style="margin-top: 15px; padding: 10px; border-radius: 10px; justify-content: space-between;">
-                            <div>
-                                <span class="routing-label active-label" id="label-console" style="font-size: 14px;">Modo Console (Xbox/PS5)</span>
-                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: left;">Roteia a internet do Xbox via cabo de rede</p>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="cursor: pointer; font-size: 18px;" onclick="openTutorialModal()" title="Como conectar o Xbox?">❓</span>
-                                <label class="switch">
-                                    <input type="checkbox" id="toggle-console" onchange="toggleConsoleMode()">
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
+                    <div class="routing-mode-container glass" style="margin-top: 15px; padding: 10px; border-radius: 10px; justify-content: space-between; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        <div>
+                            <span class="routing-label active-label" id="label-console" style="font-size: 14px;">Modo Console (Xbox/PS5)</span>
+                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: left;">Roteia a internet do Xbox via cabo de rede</p>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="cursor: pointer; font-size: 18px;" onclick="openTutorialModal()" title="Como conectar o Xbox?">❓</span>
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-console" onchange="toggleConsoleMode()">
+                                <span class="slider round"></span>
+                            </label>
                         </div>
                     </div>
                     <div id="import-msg" class="msg-box"></div>
