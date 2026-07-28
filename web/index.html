@@ -88,6 +88,20 @@
                             <button class="btn-import" id="btn-import" onclick="importConfig()">Import Key</button>
                             <button class="btn-remove" id="btn-remove" onclick="removeConfig()" style="display: none;">Remove Key</button>
                         </div>
+                        
+                        <div class="routing-mode-container glass" style="margin-top: 15px; padding: 10px; border-radius: 10px; justify-content: space-between;">
+                            <div>
+                                <span class="routing-label active-label" id="label-console" style="font-size: 14px;">Modo Console (Xbox/PS5)</span>
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px; text-align: left;">Roteia a internet do Xbox via cabo de rede</p>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span style="cursor: pointer; font-size: 18px;" onclick="openTutorialModal()" title="Como conectar o Xbox?">❓</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="toggle-console" onchange="toggleConsoleMode()">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div id="import-msg" class="msg-box"></div>
                 </div>
@@ -103,6 +117,22 @@
             <div class="modal-buttons">
                 <button class="btn-cancel" onclick="closeConfirmModal()">Não</button>
                 <button class="btn-confirm" onclick="proceedRemoveKey()">Sim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Xbox Modal -->
+    <div id="tutorial-modal" class="modal-overlay">
+        <div class="modal-content glass" style="max-width: 500px; text-align: left; padding: 25px;">
+            <h3 style="color: var(--accent-red); margin-bottom: 15px;">Tutorial: Como Ligar o Xbox</h3>
+            <p style="font-size: 14px; margin-bottom: 10px;">1. Conecte seu PC/Notebook no Wi-Fi da casa.</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">2. Ligue um Cabo de Rede (Ethernet) do PC direto no Xbox.</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">3. No Windows, aperte Iniciar, digite <b>Exibir conexões de rede</b> e abra.</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">4. Clique com botão direito no seu <b>Wi-Fi</b> > Propriedades > aba Compartilhamento.</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">5. Marque <i>"Permitir que outros usuários se conectem através da conexão deste computador"</i> e selecione a sua placa Ethernet.</p>
+            <p style="font-size: 14px; margin-bottom: 20px;">6. Ative a VPN do jogo aqui no aplicativo. O Xbox passará a rotear o jogo pela Oracle!</p>
+            <div class="modal-buttons">
+                <button class="btn-confirm" onclick="closeTutorialModal()" style="width: 100%;">Entendi</button>
             </div>
         </div>
     </div>

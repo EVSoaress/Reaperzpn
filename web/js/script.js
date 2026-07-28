@@ -154,6 +154,12 @@ async function updateKeyStatus() {
             endpointIp.textContent = status.endpoint || "N/A";
             btnRemove.style.display = "block";
             btnImport.textContent = "Trocar Key";
+            document.getElementById('toggle-console').checked = status.console_mode || false;
+            if(status.console_mode) {
+                document.getElementById('label-console').classList.add('active-label');
+            } else {
+                document.getElementById('label-console').classList.remove('active-label');
+            }
         } else {
             badge.textContent = "Vazia";
             badge.className = "badge inactive";
@@ -161,6 +167,7 @@ async function updateKeyStatus() {
             endpointText.style.display = "none";
             btnRemove.style.display = "none";
             btnImport.textContent = "Import Key";
+            document.getElementById('toggle-console').checked = false;
         }
     } catch (e) {
         console.error("Erro ao checar status da chave", e);
@@ -193,6 +200,31 @@ async function proceedRemoveKey() {
     setTimeout(() => {
         msgBox.style.display = 'none';
     }, 5000);
+}
+
+// Tutorial Modal e Console Mode
+function openTutorialModal() {
+    document.getElementById('tutorial-modal').classList.add('show');
+}
+
+function closeTutorialModal() {
+    document.getElementById('tutorial-modal').classList.remove('show');
+}
+
+async function toggleConsoleMode() {
+    const isChecked = document.getElementById('toggle-console').checked;
+    if(isChecked) {
+        document.getElementById('label-console').classList.add('active-label');
+    } else {
+        document.getElementById('label-console').classList.remove('active-label');
+    }
+    
+    // Envia o estado para o Python salvar
+    const result = await eel.toggle_console_mode(isChecked)();
+    if(result.success && vpnConnected) {
+        // Se a VPN já estiver ligada, avisa que precisa reconectar
+        alert("O modo mudou! Desligue e ligue a VPN novamente para aplicar o novo roteamento de Console.");
+    }
 }
 
 // Auto-Iniciar ao carregar o DOM
